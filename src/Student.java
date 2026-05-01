@@ -13,19 +13,27 @@ public class Student implements StudentInterface<Course>{
     private String email;
     private String major;
     private ArrayList<Course> coursesCompleted;
-    private ArrayList<Course> majorCoursesNeeded; // once we get data from fileparser this will be pre-initialized for each student  
+    private ArrayList<Course> majorCoursesNeeded; // once we get data from fileparser this will be pre-initialized for each student 
+    private ArrayList<Course> geCoursesNeeded; // once we get data from fileparser this will be pre-initialized for each student  
 
     public Student(String Email, int id, String major){
         this.studentID = id;
         this.email=Email;
         this.coursesCompleted = new ArrayList<Course>();
         this.majorCoursesNeeded = new ArrayList<Course>();
+        this.geCoursesNeeded = new ArrayList<Course>();
     }
 
     //returns student's MajorCousesNeeded 
     public ArrayList<Course> getMajorCoursesNeeded(){
         return this.majorCoursesNeeded;
     }
+
+    //get ge CoursesNeeded
+    public ArrayList<Course> getGECoursesNeeded(){
+        return this.geCoursesNeeded;
+    }
+
     //right now set to null because don't know if this should be GEs or how we are handling that yet
     public ArrayList<Course> getCoursesNeeded(){
         return null;
@@ -34,6 +42,12 @@ public class Student implements StudentInterface<Course>{
     //adds a course to the student's list
     public void addCourseCompleted(Course completed){
         this.coursesCompleted.add(completed);
+        if (this.majorCoursesNeeded.contains(completed)){
+            this.majorCoursesNeeded.remove(completed);
+        }
+        if (this.geCoursesNeeded.contains(completed)){
+            this.geCoursesNeeded.remove(completed);
+        }
     }
 
     //true if the user has completed that course
