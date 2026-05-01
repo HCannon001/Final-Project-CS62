@@ -13,11 +13,13 @@ public interface StudentInterface<C> {
 
     public ArrayList<C> getCoursesNeeded();
 
-    public void addCourseNeeded(C course);
-
-    public void addCourseCompleted(C completed);
+    public void addCourseCompleted(Course completed);
 
     public C getCourseCompleted(int index);
 
-    public ArrayList<C> getCompletedCourse();
+    public ArrayList<C> getCompletedCourseList();
+
+    public String getMajor();
+
+    public void setMajor(String major);
 }
