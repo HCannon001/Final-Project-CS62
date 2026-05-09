@@ -1,7 +1,23 @@
 package src;
 //This is the Student Class
 // Each Student Object is 1 user
+//
 
+/***
+ * WORK TO BE DONE BY TOM:
+ * Put in tests for edge cases
+
+
+
+
+
+
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
 
 //Imports
 import java.util.ArrayList;
@@ -13,41 +29,25 @@ public class Student implements StudentInterface<Course>{
     private String email;
     private String major;
     private ArrayList<Course> coursesCompleted;
-    private ArrayList<Course> majorCoursesNeeded; // once we get data from fileparser this will be pre-initialized for each student 
-    private ArrayList<Course> geCoursesNeeded; // once we get data from fileparser this will be pre-initialized for each student  
+    private String password;
+   
 
-    public Student(String Email, int id, String major){
+    public Student(String Email, int id, String major, String password){
         this.studentID = id;
         this.email=Email;
         this.coursesCompleted = new ArrayList<Course>();
-        this.majorCoursesNeeded = new ArrayList<Course>();
-        this.geCoursesNeeded = new ArrayList<Course>();
+        this.password = password;
+        
     }
 
-    //returns student's MajorCousesNeeded 
-    public ArrayList<Course> getMajorCoursesNeeded(){
-        return this.majorCoursesNeeded;
+    public String getPassword(){
+        return this.password;
     }
 
-    //get ge CoursesNeeded
-    public ArrayList<Course> getGECoursesNeeded(){
-        return this.geCoursesNeeded;
-    }
-
-    //right now set to null because don't know if this should be GEs or how we are handling that yet
-    public ArrayList<Course> getCoursesNeeded(){
-        return null;
-    }
-
-    //adds a course to the student's list
+    //adds a course to the student's list, if it is not already in there
+    //This has no checks for validity because completed will be checked before function is called
     public void addCourseCompleted(Course completed){
-        this.coursesCompleted.add(completed);
-        if (this.majorCoursesNeeded.contains(completed)){
-            this.majorCoursesNeeded.remove(completed);
-        }
-        if (this.geCoursesNeeded.contains(completed)){
-            this.geCoursesNeeded.remove(completed);
-        }
+        if (!this.coursesCompleted.contains(completed)) {this.coursesCompleted.add(completed);}       
     }
 
     //true if the user has completed that course
@@ -73,23 +73,25 @@ public class Student implements StudentInterface<Course>{
         return this.major;
     }
 
-    //loops through the major courses needed and removes any that have been taken
-    //will be used when changing majors
-    public void updateCoursesNeeded(){
-        for (Course n :this.majorCoursesNeeded){
-            if (this.completedCourse(n)){
-                this.majorCoursesNeeded.remove(n);
-            }
-        }
-    }
-    //Sets the student's major to new major
-    // creates a new arraylist for their new major and updates it
-    public void setMajor(String major){
-        this.major = major;
-        this.majorCoursesNeeded = new ArrayList<Course>(); // 
-        this.updateCoursesNeeded();
-    }
+
+    // //loops through the major courses needed and removes any that have been taken
+    // //will be used when changing majors
+    // public void updateCoursesNeeded(){
+    //     for (Course n :this.majorCoursesNeeded){
+    //         if (this.completedCourse(n)){
+    //             this.majorCoursesNeeded.remove(n);
+    //         }
+    //     }
+    // }
+    // //Sets the student's major to new major
+    // // creates a new arraylist for their new major and updates it
+    // public void setMajor(String major){
+    //     this.major = major;
+    //     this.majorCoursesNeeded = new ArrayList<Course>(); // 
+    //     this.updateCoursesNeeded();
+    // }
 
 
 
+    
 }
