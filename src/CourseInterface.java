@@ -13,7 +13,7 @@ public interface CourseInterface<C, S> {
 
     public ArrayList<C> getPreReq();
 
-    public void addSecion(S section);
+    public void addSection(S section);
 
     public S getSection(int index);
 
