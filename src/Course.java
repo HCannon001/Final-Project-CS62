@@ -52,7 +52,7 @@ public class Course implements CourseInterface<Course, Section> {
      * Add a section for the course
      * @param section
      */
-    public void addSecion(Section section) {
+    public void addSection(Section section) {
         sections.add(section);
     }
 

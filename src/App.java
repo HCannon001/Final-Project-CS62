@@ -1,12 +1,27 @@
 package src;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.zip.DataFormatException;
 
 public class App {
     
+    //key is course id
     HashMap<String, Course> courses;
+    //key is name, value is course id
+    HashMap<String, String> courseNameToId;
+    //key is course email
     HashMap<String, Student> students;
+    //is app running
     boolean run = true;
+    //the current student logged in
+    Student currentStudent = null;
 
     /**
      * Constructor for App
@@ -34,8 +49,8 @@ public class App {
             }
             if (csvFiles[i].equals("--sections")) {
                 if (i + 1 < csvFiles.length) {
-                    System.out.println("The Section CSV is set to " + sectionsCSV);
                     sectionsCSV = csvFiles[i + 1];
+                    System.out.println("The Section CSV is set to " + sectionsCSV);
                     i++;
                 } else {
                     System.err.print("Error: Flag " + csvFiles[i] + " requires an argument.");
@@ -51,8 +66,133 @@ public class App {
             throw new IllegalArgumentException("Error: The --sections flag is requried to run the program along with a csv file");
         }
 
-        //code for parsing and adding courses values
         this.courses = new HashMap<>();
+        this.courseNameToId = new HashMap<>();
+
+        loadCourses(coursesCSV);
+        loadSections(sectionsCSV);
+    }
+
+    private void loadCourses(String filePath) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filePath));
+            String line;
+            boolean firstLine = true;
+
+            while ((line = br.readLine()) != null) {
+                if (firstLine) {
+                    firstLine = false;
+                    continue;
+                }
+
+                String[] fields = parseCSVLine(line);
+                if (fields.length < 3) {
+                    continue;
+                }
+
+                String courseCode = fields[0].trim();
+                String courseName = fields[1].trim();
+                String description = fields.length > 6 ? fields[6].trim() : "";
+
+                Course course = new Course(courseCode, courseName, description);
+
+                if (fields.length > 2) {
+                    course.addMajor(fields[2].trim());
+                }
+                if (fields.length > 3) {
+                    course.addMajor(fields[3].trim());
+                }
+
+                courses.put(courseCode, course);
+                courseNameToId.put(courseName, courseCode);
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading courses file: " + e.getMessage());
+        }
+    }
+
+    private void loadSections(String filePath) {
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("H:mm");
+        int attached = 0;
+        int skipped = 0;
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filePath));
+            String line;
+            boolean firstLine = true;
+
+            while ((line = br.readLine()) != null) {
+                if (firstLine) {
+                    firstLine = false;
+                    continue;
+                }
+
+                String[] fields = parseCSVLine(line);
+                if (fields.length < 17) {
+                    continue;
+                }
+
+                String courseCode = fields[0].trim();
+                String meetingDays = fields[12].trim();
+                String startTimestr = fields[14].trim();
+                String room = fields[16].trim();
+                String instructor = fields[17].trim();
+
+                LocalTime startTime;
+                try {
+                    startTime = LocalTime.parse(startTimestr, timeFormatter);
+                } catch (Exception e) {
+                    startTime = LocalTime.MIDNIGHT;
+                }
+
+                Section section = new Section(meetingDays, startTime, instructor, room);
+
+                Course course = courses.get(courseCode);
+                if (course != null) {
+                    course.addSection(section);
+                    attached++;
+                } else {
+                    skipped++;
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading section file: " + e.getMessage());
+        }
+    }
+
+    private String[] parseCSVLine(String line) {
+        ArrayList<String> fields = new ArrayList<>();
+        StringBuilder current = new StringBuilder();
+        boolean inQuotes = false;
+
+        for (int i = 0; i < line.length(); i++) {
+            char c = line.charAt(i);
+
+            if (inQuotes) {
+                if (c == '"') {
+                    if (i + 1 < line.length() && line.charAt(i + 1) == '"') {
+                        current.append('"');
+                        i++;
+                    } else {
+                        inQuotes = false;
+                    }
+                } else {
+                    current.append(c);
+                }
+            } else {
+                if (c == '"') {
+                    inQuotes = true;
+                } else if (c == ',') {
+                    fields.add(current.toString());
+                    current.setLength(0);
+                } else {
+                    current.append(c);
+                }
+            }
+        }
+        fields.add(current.toString());
+
+        return fields.toArray(new String[0]);
     }
 
     /**
