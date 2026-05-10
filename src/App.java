@@ -8,6 +8,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.zip.DataFormatException;
 
 public class App {
@@ -199,9 +200,81 @@ public class App {
      * The main loop for the program
      */
     public void runApp() {
-        //place holder loop to show how the function will run on an over arching base
+        Scanner inputScanner = new Scanner(System.in);
         while (run) {
-            run = false;
+            //sign in/create account
+            if (currentStudent == null) {
+                System.out.println("Press 1 to create an account, 2 to sign in");
+                int input = inputScanner.nextInt();
+                inputScanner.nextLine();
+                if (input == 1) {
+                    System.out.println("Hello! Thank You For Making An Account With Us!");
+                    System.out.println("Enter Email: ");
+                    String userEmail = inputScanner.nextLine().trim();
+                    System.out.println(userEmail);
+                    System.out.println("Enter Student ID number: ");
+                    int userID =  inputScanner.nextInt();
+                    inputScanner.nextLine();
+                    System.out.println("Enter Major: ");
+                    String userMajor = inputScanner.nextLine().trim();
+                    System.out.println("Enter Password: ");
+                    String userPass = inputScanner.nextLine().trim();
+                    Student newStudent = new Student(userEmail, userID, userMajor, userPass);
+                    System.out.println("You account is now made and you are signed in!");
+                    currentStudent = newStudent;
+                    students.put(userEmail, newStudent);
+                } else if (input == 2) {
+                    System.out.println("Enter Your Email: ");
+                    String line = inputScanner.nextLine().trim();
+                    Student current = this.students.get(line);
+                    //User does not have an account yet, prompt them to set one up
+                    if (current == null){
+                        System.out.println("You do not have an account yet, please set one up. ");
+                        continue;
+                    }
+                    else{
+                        System.out.println("Enter Your Password: ");
+                        line = inputScanner.nextLine().trim();
+                        if (line.equals(current.getPassword())){
+                            currentStudent = current;
+                            break;
+                        }
+                        else{
+                            System.out.println("Wrong Password");
+                        }
+                    }
+                }
+            } else {
+                System.out.println("Press 1 to add classes taken, 2 to check your major progress, 3 to get a possible schedule, and 4 to log out: ");
+                int response = inputScanner.nextInt();
+                if (response == 1) {
+                    boolean proceed = true;
+                    System.out.println("Please Now Enter The Courses You Have Taken");
+                    while(proceed){
+                        System.out.println("Enter Course, or type 'STOP': ");
+                        String line = inputScanner.nextLine().trim();
+                        if (line.equals("STOP")){
+                            proceed = false;
+                        }
+                        else{
+                            Course adding = this.courses.get(line);
+                            if (adding != null){
+                                currentStudent.addCourseCompleted(adding); 
+                            }
+                            else{
+                                System.out.println("That is not a valid course.");
+                                System.out.println("");
+                            }
+                        }
+                    }
+                } else if (response == 2) {
+                    currentStudent.checkMajorProgress();
+                } else if (response == 3) {
+                    //do phineus' work
+                } else if (response == 4) {
+                    currentStudent = null;
+                }
+            }
         }
     }
 
