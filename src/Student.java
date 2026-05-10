@@ -45,16 +45,10 @@ public class Student implements StudentInterface<Course>{
         return this.password;
     }
 
-    //get ge CoursesNeeded
-    public ArrayList<Course> getGECoursesNeeded(){
-        return this.geCoursesNeeded;
-    }
+ 
 
-    // right now set to null because don't know if this should be GEs or how we are handling that yet
-    public ArrayList<Course> getCoursesNeeded(){
-        return null;
-    }
-
+    
+  
     public void checkMajorProgress(){
         String[] requiredCourses = {"51", "54", "62", "101", "105", "140", "190"};
         HashMap<String, Boolean> coursesCompletedMap = new HashMap<>();
