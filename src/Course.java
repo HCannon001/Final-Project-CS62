@@ -95,6 +95,15 @@ public class Course implements CourseInterface<Course, Section> {
     }
 
     /**
+     * getter for ID
+     * 
+     * @return ID
+     */
+    public String getId() {
+        return this.id;
+    }
+
+    /**
      * Add a major to the array of majors
      * 
      * @param major
