@@ -211,13 +211,11 @@ public class App {
                     boolean exists = false;
                     System.out.println("Hello! Thank You For Making An Account With Us!");
                     System.out.println("Enter Email: ");
-                    String userEmail = inputScanner.nextLine().trim();
-                    for (Student s : this.students.values()){
-                        if (s.getEmail().equals(userEmail)){ // check if this account already exists
-                            System.out.println("This Email Already Has An Account");
-                            exists = true;
-                            continue;
-                        }
+                    String userEmail = inputScanner.nextLine().trim();                  
+                    if (this.students.get(userEmail) != null){ // check if this account already exists
+                        System.out.println("This Email Already Has An Account");
+                        exists = true;
+                        continue;
                     }
                     if (!exists){ //if not they can make a new one
                         System.out.println(userEmail);
