@@ -45,9 +45,13 @@ public class Student implements StudentInterface<Course>{
         return this.password;
     }
 
- 
+    public String getEmail(){
+        return this.email;
+    }
 
-    
+    public int getID(){
+        return this.studentID;
+    }
   
     public void checkMajorProgress(){
         String[] requiredCourses = {"51", "54", "62", "101", "105", "140", "190"};

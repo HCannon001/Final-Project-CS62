@@ -245,37 +245,73 @@ public class App {
                     }
                 }
             } else {
-                System.out.println("Press 1 to add classes taken, 2 to check your major progress, 3 to get a possible schedule, and 4 to log out: ");
+                System.out.println("Press 1 to add classes taken, 2 to , 3 to check your major progress, 4 to get a possible schedule, and 5 to log out: ");
                 int response = inputScanner.nextInt();
-                if (response == 1) {
+                if (response == 1) { // add classes taken
                     boolean proceed = true;
-                    System.out.println("Please Now Enter The Courses You Have Taken");
+                    System.out.println("Please Now Enter The Courses You Would Like To Add By ID, for example: CSCI054 PO");
                     while(proceed){
-                        System.out.println("Enter Course, or type 'STOP': ");
+                        ArrayList<Course> addedClasses = new ArrayList<Course>();
+                        System.out.println("Enter Course To Add, or type 'STOP': ");
                         String line = inputScanner.nextLine().trim();
                         if (line.equals("STOP")){
                             proceed = false;
                         }
                         else{
-                            Course adding = this.courses.get(line);
+                            Course adding = this.courses.get(this.courseNameToId.get(line));
                             if (adding != null){
                                 currentStudent.addCourseCompleted(adding); 
+                                System.out.println("Course Added!");
+                                addedClasses.add(adding);
                             }
                             else{
                                 System.out.println("That is not a valid course.");
                                 System.out.println("");
                             }
                         }
+                        System.out.println("The Following Courses Were Added:");
+                        for (Course c : addedClasses){
+                            System.out.println(c.getName());
+                        }
                     }
-                } else if (response == 2) {
+                    
+                } else if( response == 2){ // remove courses
+                    boolean proceed = true;
+                    System.out.println("Please Now Enter The Courses You Would Like To Remove By ID, for example: CSCI054 PO");
+                    while(proceed){
+                        ArrayList<Course> removedClasses = new ArrayList<Course>();
+                        System.out.println("Enter Course To Remove, or type 'STOP': ");
+                        String line = inputScanner.nextLine().trim();
+                        if (line.equals("STOP")){
+                            proceed = false;
+                        }
+                        else{
+                            Course removing = this.courses.get(this.courseNameToId.get(line));
+                            if (removing != null){
+                                currentStudent.addCourseCompleted(removing); 
+                                System.out.println("Course Removed!");
+                                removedClasses.add(removing);
+                            }
+                            else{
+                                System.out.println("That is not a valid course.");
+                                System.out.println("");
+                            }
+                        }
+                        System.out.println("The Following Courses Were Removed:");
+                        for (Course c : removedClasses){
+                            System.out.println(c.getName());
+                        }
+                    }
+                }else if (response == 3) { //check major progress
                     currentStudent.checkMajorProgress();
-                } else if (response == 3) {
+                } else if (response == 4) { //get possible schedule
                     //do phineus' work
-                } else if (response == 4) {
+                } else if (response == 5) {//log out
                     currentStudent = null;
                 }
             }
         }
+        inputScanner.close();
     }
 
     /**

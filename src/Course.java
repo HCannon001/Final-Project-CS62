@@ -120,4 +120,8 @@ public class Course implements CourseInterface<Course, Section> {
     public ArrayList<String> getMajor() {
         return majors;
     }
+
+    public String getName(){
+        return this.name;
+    }
 }
