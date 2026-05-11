@@ -237,7 +237,7 @@ public class App {
                         line = inputScanner.nextLine().trim();
                         if (line.equals(current.getPassword())){
                             currentStudent = current;
-                            break;
+                            continue;
                         }
                         else{
                             System.out.println("Wrong Password");
@@ -245,7 +245,7 @@ public class App {
                     }
                 }
             } else {
-                System.out.println("Press 1 to add classes taken, 2 to , 3 to check your major progress, 4 to get a possible schedule, and 5 to log out: ");
+                System.out.println("Press: \n 1: to add classes taken \n 2: to remove a class from classes taken \n 3: to see the courses entered \n 4: to check your major progress \n 5: to get a possible schedule \n 6: to log out");
                 int response = inputScanner.nextInt();
                 inputScanner.nextLine();
                 if (response == 1) {
@@ -255,11 +255,12 @@ public class App {
                         ArrayList<Course> addedClasses = new ArrayList<Course>();
                         System.out.println("Enter Course To Add, or type 'STOP': ");
                         String line = inputScanner.nextLine().trim();
+                        System.out.println(line);
                         if (line.equals("STOP")){
                             proceed = false;
                         }
                         else{
-                            Course adding = this.courses.get(this.courseNameToId.get(line));
+                            Course adding = this.courses.get(line);
                             if (adding != null){
                                 currentStudent.addCourseCompleted(adding); 
                                 System.out.println("Course Added!");
@@ -303,11 +304,19 @@ public class App {
                             System.out.println(c.getName());
                         }
                     }
-                }else if (response == 3) { //check major progress
+                }else if(response == 3) {
+                    ArrayList<Course> completedCourses = currentStudent.getCompletedCourseList();
+                    System.out.println("The courses that you have taken are:");
+                    for (int i = 0; i < completedCourses.size(); i++) {
+                        System.out.println((i + 1) + ": " + completedCourses.get(i));
+                    }
+                    System.out.println("Hit enter to continue");
+                    inputScanner.nextLine();
+                }else if (response == 4) { //check major progress
                     currentStudent.checkMajorProgress();
-                } else if (response == 4) { //get possible schedule
+                } else if (response == 5) { //get possible schedule
                     //do phineus' work
-                } else if (response == 5) {//log out
+                } else if (response == 6) {//log out
                     currentStudent = null;
                 }
             }

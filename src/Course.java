@@ -124,4 +124,26 @@ public class Course implements CourseInterface<Course, Section> {
     public String getName(){
         return this.name;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Course course = (Course) obj;
+        return id == course.id && 
+            name == course.name && 
+            description == course.description && 
+            majors.equals(course.majors) &&
+            sections.equals(course.sections) &&
+            preReqs.equals(course.preReqs);
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -52,6 +52,10 @@ public class Student implements StudentInterface<Course>{
     public int getID(){
         return this.studentID;
     }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
   
     public void checkMajorProgress(){
         String[] requiredCourses = {"51", "54", "62", "101", "105", "140", "190"};

@@ -9,10 +9,6 @@ import java.util.ArrayList;
  */
 public interface StudentInterface<C> {
 
-    public ArrayList<C> getMajorCoursesNeeded();
-
-    public ArrayList<C> getCoursesNeeded();
-
     public void addCourseCompleted(Course completed);
 
     public C getCourseCompleted(int index);
