@@ -208,21 +208,31 @@ public class App {
                 int input = inputScanner.nextInt();
                 inputScanner.nextLine();
                 if (input == 1) {
+                    boolean exists = false;
                     System.out.println("Hello! Thank You For Making An Account With Us!");
                     System.out.println("Enter Email: ");
                     String userEmail = inputScanner.nextLine().trim();
-                    System.out.println(userEmail);
-                    System.out.println("Enter Student ID number: ");
-                    int userID =  inputScanner.nextInt();
-                    inputScanner.nextLine();
-                    System.out.println("Enter Major: ");
-                    String userMajor = inputScanner.nextLine().trim();
-                    System.out.println("Enter Password: ");
-                    String userPass = inputScanner.nextLine().trim();
-                    Student newStudent = new Student(userEmail, userID, userMajor, userPass);
-                    System.out.println("You account is now made and you are signed in!");
-                    currentStudent = newStudent;
-                    students.put(userEmail, newStudent);
+                    for (Student s : this.students.values()){
+                        if (s.getEmail().equals(userEmail)){ // check if this account already exists
+                            System.out.println("This Email Already Has An Account");
+                            exists = true;
+                            continue;
+                        }
+                    }
+                    if (!exists){ //if not they can make a new one
+                        System.out.println(userEmail);
+                        System.out.println("Enter Student ID number: ");
+                        int userID =  inputScanner.nextInt();
+                        inputScanner.nextLine();
+                        System.out.println("Enter Major: ");
+                        String userMajor = inputScanner.nextLine().trim();
+                        System.out.println("Enter Password: ");
+                        String userPass = inputScanner.nextLine().trim();
+                        Student newStudent = new Student(userEmail, userID, userMajor, userPass);
+                        System.out.println("You account is now made and you are signed in!");
+                        currentStudent = newStudent;
+                        students.put(userEmail, newStudent);
+                    }
                 } else if (input == 2) {
                     System.out.println("Enter Your Email: ");
                     String line = inputScanner.nextLine().trim();
