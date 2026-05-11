@@ -9,41 +9,49 @@ public class ScheduleGenerator {
 
     /**
      * Generates a 4-course schedule based on desired courses and fills the rest randomly.
-     * @param student        The current student object
-     * @param desiredCourses A list of Course objects the student explicitly wants to take
-     * @param allCourses     The HashMap of all available courses in the catalog (from App.java)
-     * @return An ArrayList representing the generated schedule
+     * @param student
+     * @param desiredCourses
+     * @param allCourses
+     * @return
      */
     public ArrayList<Course> generateSchedule(Student student, List<Course> desiredCourses, HashMap<String, Course> allCourses) {
         ArrayList<Course> schedule = new ArrayList<>();
+        ArrayList<Section> scheduledSections = new ArrayList<>(); 
         
-        // Process desired courses
         for (Course course : desiredCourses) {
             if (schedule.size() >= 4) break;
             
             if (canTakeCourse(student, course, true)) {
-                // TODO: Add time-conflict validation here later once Section formatting is complete
-                schedule.add(course);
+                Section validSection = findNonConflictingSection(course, scheduledSections);
+                
+                if (validSection != null) {
+                    schedule.add(course);
+                    scheduledSections.add(validSection);
+                } else {
+                    String targetId = (course.getId() != null) ? course.getId() : "Unknown Course";
+                    System.out.println("Cannot add " + targetId + " - Time conflict with already scheduled courses.");
+                }
             } 
         }
 
-        // Randomly populate the rest of the schedule up to 4 courses
         if (schedule.size() < 4) {
             List<Course> availableCoursesList = new ArrayList<>(allCourses.values());
             Random rand = new Random();
 
             int attempts = 0;
-            // Prevent infinite loop if catalog is too small
             while (schedule.size() < 4 && attempts < availableCoursesList.size() * 2) {
                 Course randomCourse = availableCoursesList.get(rand.nextInt(availableCoursesList.size()));
                 
                 boolean alreadyInSchedule = schedule.contains(randomCourse);
                 boolean alreadyTaken = student.completedCourse(randomCourse); 
                 
-                // Pass 'false' so we DON'T spam the console with errors while randomly guessing
                 if (!alreadyInSchedule && !alreadyTaken && canTakeCourse(student, randomCourse, false)) {
-                    // TODO: Add time-conflict validation here later
-                    schedule.add(randomCourse);
+                    
+                    Section validSection = findNonConflictingSection(randomCourse, scheduledSections);
+                    if (validSection != null) {
+                        schedule.add(randomCourse);
+                        scheduledSections.add(validSection);
+                    }
                 }
                 attempts++;
             }
@@ -53,8 +61,57 @@ public class ScheduleGenerator {
     }
 
     /**
+     * Checks if the course has at least one section that does not conflict with the existing schedule.
+     */
+    private Section findNonConflictingSection(Course course, ArrayList<Section> scheduledSections) {
+        ArrayList<Section> availableSections = course.getSections();
+        
+        // If a course has no sections listed in the data, it cannot be taken
+        if (availableSections == null || availableSections.isEmpty()) {
+            return null; 
+        }
+
+        for (Section section : availableSections) {
+            boolean conflict = false;
+            for (Section scheduled : scheduledSections) {
+                if (doesConflict(section, scheduled)) {
+                    conflict = true;
+                    break;
+                }
+            }
+            if (!conflict) {
+                return section;
+            }
+        }
+        return null; 
+    }
+
+    /**
+     * Determines if two specific sections overlap in days and time.
+     */
+    private boolean doesConflict(Section s1, Section s2) {
+        if (s1.getDays() == null || s2.getDays() == null || s1.getTime() == null || s2.getTime() == null) {
+            return false; 
+        }
+
+        boolean daysOverlap = false;
+        for (char day : s1.getDays().toCharArray()) {
+            if (s2.getDays().indexOf(day) != -1) {
+                daysOverlap = true;
+                break;
+            }
+        }
+
+        if (!daysOverlap) {
+            return false;
+        }
+
+        return s1.getTime().equals(s2.getTime());
+    }
+
+    /**
      * Iteratively checks if the student meets all prerequisites to take the course.
-     * @param isDesired If true, prints out the exact missing courses to the console.
+     * @param isDesired 
      */
     private boolean canTakeCourse(Student student, Course course, boolean isDesired) {
         String targetId = course.getId();
@@ -90,7 +147,7 @@ public class ScheduleGenerator {
 
     /**
      * Helper method to verify intro CS courses.
-     * Returns a list of the specific core courses (51, 54, 62) the student has NOT taken.
+     * Returns a list of the specific intro courses (51, 54, 62) the student has NOT taken.
      */
     private ArrayList<String> getMissingIntroCourses(Student student) {
         ArrayList<Course> completed = student.getCompletedCourseList(); 
