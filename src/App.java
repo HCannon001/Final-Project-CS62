@@ -91,7 +91,7 @@ public class App {
                     continue;
                 }
 
-                String courseCode = fields[0].trim();
+                String courseCode = fields[0].replaceAll("\\s{2,}", " ").trim();
                 String courseName = fields[1].trim();
                 String description = fields.length > 6 ? fields[6].trim() : "";
 
@@ -247,6 +247,7 @@ public class App {
             } else {
                 System.out.println("Press 1 to add classes taken, 2 to check your major progress, 3 to get a possible schedule, and 4 to log out: ");
                 int response = inputScanner.nextInt();
+                inputScanner.nextLine();
                 if (response == 1) {
                     boolean proceed = true;
                     System.out.println("Please Now Enter The Courses You Have Taken");
@@ -276,6 +277,7 @@ public class App {
                 }
             }
         }
+        inputScanner.close();
     }
 
     /**
