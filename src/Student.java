@@ -56,7 +56,7 @@ public class Student implements StudentInterface<Course>{
     public void setMajor(String major) {
         this.major = major;
     }
-  
+    
     public void checkMajorProgress(){
         String[] requiredCourses = {"51", "54", "62", "101", "105", "140", "190"};
         HashMap<String, Boolean> coursesCompletedMap = new HashMap<>();
@@ -66,7 +66,7 @@ public class Student implements StudentInterface<Course>{
         int electivesCompleted = 0;
 
         for (Course myCourse : this.coursesCompleted){
-            if (myCourse.getId().contains("CSCI")){
+            if (myCourse.getId().contains("CSCI") && myCourse.getId().length()>=10) {
                if (myCourse.getId().equals("CSCI051 PO")){
                    coursesCompletedMap.put("51", true);
                }
@@ -88,14 +88,16 @@ public class Student implements StudentInterface<Course>{
             else if (myCourse.getId().equals("CSCI190 PO")){
                    coursesCompletedMap.put("190", true);
                }
-            else if (myCourse.getId().contains("CSCI051L") || myCourse.getId().contains("CSCI054L") || myCourse.getId().contains("CSCI062L") || myCourse.getId().contains("CSCI101L") || myCourse.getId().contains("CSCI105L") || myCourse.getId().contains("CSCI140L") || myCourse.getId().contains("CSCI190L")){
+            else if (myCourse.getId().contains("CSCI050")  || myCourse.getId().charAt(7)=='L'){
                 // if it's a lab for one of the required courses, we do not count it as an elective
             }
             else{
+            // add checks for labs and CS 50
             //might wanna add lab checks and/or low division checks and/or repetition checks
                 electivesCompleted++;}
             }
         }
+
         ArrayList<String> coursesStillNeeded = new ArrayList<String>();
         for (String course : requiredCourses) {
             if (!coursesCompletedMap.get(course)) {
