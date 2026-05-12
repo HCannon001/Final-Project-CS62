@@ -298,7 +298,7 @@ public class App {
                             proceed = false;
                         }
                         else{
-                            Course removing = this.courses.get(this.courseNameToId.get(line));
+                            Course removing = this.courses.get(line);
                             if (removing != null){
                                 currentStudent.addCourseCompleted(removing); 
                                 System.out.println("Course Removed!");
@@ -314,7 +314,7 @@ public class App {
                             System.out.println(c.getName());
                         }
                     }
-                }else if(response == 3) {
+                } else if(response == 3) {
                     ArrayList<Course> completedCourses = currentStudent.getCompletedCourseList();
                     System.out.println("The courses that you have taken are:");
                     for (int i = 0; i < completedCourses.size(); i++) {
@@ -322,7 +322,7 @@ public class App {
                     }
                     System.out.println("Hit enter to continue");
                     inputScanner.nextLine();
-                }else if (response == 4) { //check major progress
+                } else if (response == 4) { //check major progress
                     currentStudent.checkMajorProgress();
                     System.out.println("Hit enter to continue");
                     inputScanner.nextLine();
