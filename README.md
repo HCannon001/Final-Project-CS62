@@ -50,6 +50,8 @@ and press Return/Enter. After that, follow the instructions on the terminal.
 
 ## Public API
 
+Our code is supposed to be run through `App.java`, but if someone wanted to use our API in their own program, below are the most important methods they may use.
+
 ## Usage Examples
 
 ## Authors
