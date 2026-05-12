@@ -27,6 +27,12 @@ For the algorithms and data structures behind these features, see [Implementatio
 
 ## Instructions for Running the Code
 
+To run the code in VSCode, first run the code in App.java. Then in the terminal, press the up button, and paste in 
+```
+src.App --courses data/courses.csv --sections data/sections.csv
+```
+and press Return/Enter. After that, follow the instructions on the terminal.
+
 ## Usage Examples
 
 ## Implementation Details
