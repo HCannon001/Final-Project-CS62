@@ -93,12 +93,11 @@ public class ScheduleGenerator {
      * Helper to identify if a course is a varsity sport or PE class.
      */
     private boolean isVarsity(Course course) {
-        if (course.getName() != null && course.getName().toLowerCase().contains("varsity")) {
+        if (course.getName() != null && course.getName().toLowerCase().contains("varsity") || course.getName() != null && course.getName().toLowerCase().contains("thesis")) {
             return true;
         }
         if (course.getId() != null) {
             String id = course.getId().toUpperCase();
-            // Catches standard PE, PHED, or VARS department codes
             if (id.startsWith("PE") || id.startsWith("PHED") || id.contains("VARS")) {
                 return true;
             }
@@ -166,7 +165,6 @@ public class ScheduleGenerator {
         boolean isCSCourse = targetId.startsWith("CSCI"); 
 
         if (isTargetAnIntroCourse) {
-            // STRICT SEQUENCE ENFORCEMENT for Intro CS
             if (targetId.startsWith("CSCI054") && missingIntro.contains("CSCI051")) {
                 if (isDesired) System.out.println("Cannot add " + targetId + " - You must take CSCI051 first.");
                 return false;
@@ -176,7 +174,6 @@ public class ScheduleGenerator {
                 return false;
             }
         } else if (isCSCourse && !missingIntro.isEmpty()) {
-            // ONLY block Upper-Division CS courses if they are missing the intro sequence.
             if (isDesired) {
                 System.out.println("Cannot add " + targetId + " - You must first complete these intro courses: " + String.join(", ", missingIntro));
             }
