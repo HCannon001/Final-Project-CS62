@@ -6,6 +6,8 @@ Our project helps students plan their classes by showing which classes they stil
 
 Developed by Tom Burton, Henry Cannon, Phineus Choi, Deniz Tanaci for the CS 62 Final Project in Spring 2026.
 
+Our pdf writeup can be found [here](https://docs.google.com/document/d/1U_NVlNIJujsB7xpD5aeN6MF5crR_XXT_DuV9SYN1R3E/edit?usp=sharing).
+
 ## Introduction
 
 ### Need Finding
@@ -27,18 +29,27 @@ For the algorithms and data structures behind these features, see [Implementatio
 
 ## Instructions for Running the Code
 
-To run the code in VSCode, first run the code in App.java. Then in the terminal, press the up button, and paste in 
+We are providing you with two ways to run our project:
+ 1) Through the executable `run.Jar` (Recommended)
+ 2) Manually through the terminal in VSCode
+
+### Running the Executable (Recommended)
+
+Enter `./run.sh` in the terminal. After that, follow the instructions on the terminal.
+
+### Running through the terminal in VSCode
+
+Open `App.java` in `src`, and run the code. Then in the terminal, press the up button, and paste in 
+
 ```
 src.App --courses data/courses.csv --sections data/sections.csv
 ```
+
 and press Return/Enter. After that, follow the instructions on the terminal.
 
-## Usage Examples
+## Public API
 
-## Implementation Details
-### Data Structures
-### Public API
-### Algorithms and Runtimes
+## Usage Examples
 
 ## Authors
 
