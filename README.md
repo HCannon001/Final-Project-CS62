@@ -8,15 +8,6 @@ Developed by Tom Burton, Henry Cannon, Phineus Choi, Deniz Tanaci for the CS 62 
 
 Our writeup can be found [here](https://docs.google.com/document/d/1U_NVlNIJujsB7xpD5aeN6MF5crR_XXT_DuV9SYN1R3E/edit?usp=sharing).
 
-
-## Introduction
-
-### Need Finding
-
-### Dataset
-
-Our dataset is a CSV file of more than 1,000 courses offered in Fall 2026 at the Claremont Colleges, [publicly available courtesy of Hyperschedule](https://github.com/hyperschedule/hyperschedule/blob/v2/data/FA2026/course.txt). Since our schedule recommendations are not limited to CS classes, we use all of this dataset in our project.
-
 ## Main Features
 Here is a high-level description of the three main features we developed. 
 - The user can create an account and input the CS classes they have taken so far. They can add or remove courses later.
