@@ -322,6 +322,8 @@ public class App {
                     inputScanner.nextLine();
                 }else if (response == 4) { //check major progress
                     currentStudent.checkMajorProgress();
+                    System.out.println("Hit enter to continue");
+                    inputScanner.nextLine();
                 } else if (response == 5) { //get possible schedule
                     //do phineus' work
                 } else if (response == 6) {//log out
