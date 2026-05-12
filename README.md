@@ -10,7 +10,7 @@ Our writeup can be found [here](https://docs.google.com/document/d/1U_NVlNIJujsB
 
 ## Main Features
 Here is a high-level description of the three main features we developed. 
-- The user can create an account and input the CS classes they have taken so far. They can add or remove courses later.
+- The user can create an account and input the CS classes they have taken so far. They can add or remove courses later. When adding or removing courses we first verify that the course they are referring to actually exists. If it does not, we do not change their courses taken list, and we output: "invalid course". If it does exist, and they have either taken it or not taken it respectively, we also change nothing. If it does exist and is valid to be removed/added we update their courses completed list.
 
 - Based on the completed courses, user can request a major progress check. If they haven't completed all the required classes yet, they receive a list of remaining introductory and core classes, as well as the number of electives still needed.
 

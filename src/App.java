@@ -224,9 +224,14 @@ public class App {
                         else{
                             Course adding = this.courses.get(line);
                             if (adding != null){
-                                currentStudent.addCourseCompleted(adding); 
-                                System.out.println("Course Added!");
-                                addedClasses.add(adding);
+                                if (currentStudent.getCompletedCourseList().contains(adding)){
+                                    System.out.println("You Have Already Added This Course To Your Completed Courselist.");
+                                }else{
+                                    currentStudent.addCourseCompleted(adding); 
+                                    System.out.println("Course Added!");
+                                    addedClasses.add(adding);
+                                }
+                                
                             }
                             else{
                                 System.out.println("That is not a valid course.");
@@ -252,9 +257,14 @@ public class App {
                         else{
                             Course removing = this.courses.get(line);
                             if (removing != null){
-                                currentStudent.addCourseCompleted(removing); 
-                                System.out.println("Course Removed!");
-                                removedClasses.add(removing);
+                                if (!currentStudent.getCompletedCourseList().contains(removing)){
+                                    System.out.println("You Cannot Remove A Course You Have Not Taken Yet");
+                                }else{
+                                    currentStudent.addCourseCompleted(removing); 
+                                    System.out.println("Course Removed!");
+                                    removedClasses.add(removing);
+                                }
+                                
                             }
                             else{
                                 System.out.println("That is not a valid course.");
