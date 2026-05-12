@@ -323,6 +323,10 @@ public class App {
                 case 6:
                     currentStudent = new Student(null, 0, null, null);
                     break;
+
+                default:
+                    System.out.println("Invalid option. Please choose a number between 1 and 6.");
+                    break;
             }
         }
         inputScanner.close();
