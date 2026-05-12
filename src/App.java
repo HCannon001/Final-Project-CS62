@@ -327,44 +327,22 @@ public class App {
                     System.out.println("Hit enter to continue");
                     inputScanner.nextLine();
                 } else if (response == 5) { //get possible schedule
-                    boolean proceed = true;
+                    System.out.println("How many courses do you know you want to take, they must be non-overlapping");
+                    int courseNumber = inputScanner.nextInt();
+                    inputScanner.nextLine();
                     ArrayList<Course> desiredCourses = new ArrayList<>();
-                    System.out.println("Please enter the courses you know you want to take (max 4).");
-                    
-                    while(proceed && desiredCourses.size() < 4) {
-                        System.out.println("Enter Course Code (e.g., CSCI051 PO), type 'DONE' to generate, or 'STOP' to cancel and return to menu: ");
-                        String line = inputScanner.nextLine().trim();
-                        
-                        if (line.equalsIgnoreCase("STOP")) {
-                            proceed = false;
-                            desiredCourses = null; // Flag to abort generation
-                            System.out.println("Returning to main menu...");
-                        } else if (line.equalsIgnoreCase("DONE")) {
-                            proceed = false;
-                        } else {
-                            Course adding = this.courses.get(line);
-                            if (adding != null) {
-                                desiredCourses.add(adding);
-                                System.out.println(adding.getName() + " added to your desired list!");
-                            } else {
-                                System.out.println("That is not a valid course.");
-                                System.out.println("");
-                            }
-                        }
+                    for (int i = 0; i < courseNumber; i++) {
+                        System.out.println("What is the code for course " + (i + 1) + " that you would like to take: ");
+                        desiredCourses.add(courses.get(inputScanner.nextLine()));
                     }
-                    
-                    if (desiredCourses != null) {
-                        ArrayList<Course> schedule = scheduleGenerator.generateSchedule(currentStudent, desiredCourses, courses);
-                        System.out.println("\n--- A possible schedule is ---");
-                        for (Course course : schedule) {
-                            if (course != null) {
-                                System.out.println(course.getName());
-                            }
-                        }
-                        System.out.println("------------------------------");
-                        System.out.println("Hit ENTER to continue");
-                        inputScanner.nextLine();
-                    } else if (response == 6) {//log out
+                    ArrayList<Course> schedule = scheduleGenerator.generateSchedule(currentStudent, desiredCourses, courses);
+                    System.out.println("A possible schedule is:");
+                    for (Course course : schedule) {
+                        System.out.println(course);
+                    }
+                    System.out.println("Hit ENTER to continue");
+                    inputScanner.nextLine();
+                } else if (response == 6) {//log out
                     currentStudent = null;
                 }
             }
