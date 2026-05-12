@@ -238,6 +238,7 @@ public class App {
                             System.out.println(c.getName());
                         }
                     }
+                    break;
                 case 2:
                     proceed = true;
                     System.out.println("Please Now Enter The Courses You Would Like To Remove By ID, for example: CSCI054 PO");
@@ -265,6 +266,7 @@ public class App {
                             System.out.println(c.getName());
                         }
                     }
+                    break;
                 case 3:
                     ArrayList<Course> completedCourses = currentStudent.getCompletedCourseList();
                     System.out.println("The courses that you have taken are:");
@@ -273,28 +275,54 @@ public class App {
                     }
                     System.out.println("Hit enter to continue");
                     inputScanner.nextLine();
+                    break;
                 case 4:
                     currentStudent.checkMajorProgress();
                     System.out.println("Hit enter to continue");
                     inputScanner.nextLine();
+                    break;
                 case 5:
-                    System.out.println("How many courses do you know you want to take, they must be non-overlapping");
-                    int courseNumber = inputScanner.nextInt();
-                    inputScanner.nextLine();
+                    boolean proceedSchedule = true;
                     ArrayList<Course> desiredCourses = new ArrayList<>();
-                    for (int i = 0; i < courseNumber; i++) {
-                        System.out.println("What is the code for course " + (i + 1) + " that you would like to take: ");
-                        desiredCourses.add(courses.get(inputScanner.nextLine()));
+                    System.out.println("Please enter the courses you know you want to take (max 4).");
+                    
+                    while (proceedSchedule && desiredCourses.size() < 4) {
+                        System.out.println("Enter Course Code (e.g., CSCI051 PO), type 'DONE' to generate, or 'STOP' to cancel: ");
+                        String line = inputScanner.nextLine().trim();
+                        
+                        if (line.equalsIgnoreCase("STOP")) {
+                            proceedSchedule = false;
+                            desiredCourses = null; // Flag to abort generation
+                            System.out.println("Returning to main menu...");
+                        } else if (line.equalsIgnoreCase("DONE")) {
+                            proceedSchedule = false;
+                        } else {
+                            Course adding = courses.get(line);
+                            if (adding != null) {
+                                desiredCourses.add(adding);
+                                System.out.println("Course added to your desired list!");
+                            } else {
+                                System.out.println("That is not a valid course.");
+                                System.out.println("");
+                            }
+                        }
                     }
-                    ArrayList<Course> schedule = scheduleGenerator.generateSchedule(currentStudent, desiredCourses, courses);
-                    System.out.println("A possible schedule is:");
-                    for (Course course : schedule) {
-                        System.out.println(course);
+                    
+                    if (desiredCourses != null) {
+                        ArrayList<Course> schedule = scheduleGenerator.generateSchedule(currentStudent, desiredCourses, courses);
+                        System.out.println("A possible schedule is:");
+                        for (Course course : schedule) {
+                            if (course != null) {
+                                System.out.println(course.getName());
+                            }
+                        }
+                        System.out.println("Hit ENTER to continue");
+                        inputScanner.nextLine();
                     }
-                    System.out.println("Hit ENTER to continue");
-                    inputScanner.nextLine();
+                    break;
                 case 6:
                     currentStudent = new Student(null, 0, null, null);
+                    break;
             }
         }
         inputScanner.close();
