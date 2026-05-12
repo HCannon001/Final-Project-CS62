@@ -135,8 +135,7 @@ public class App {
                     continue;
                 }
 
-                String courseCode = fields[0].trim();
-                String meetingDays = fields[12].trim();
+                String courseCode = fields[0].replaceAll("\\s{2,}", " ").trim();                String meetingDays = fields[12].trim();
                 String startTimestr = fields[14].trim();
                 String room = fields[16].trim();
                 String instructor = fields[17].trim();
