@@ -13,6 +13,7 @@ import java.util.zip.DataFormatException;
 
 public class App {
     
+    ScheduleGenerator scheduleGenerator;
     //key is course id
     HashMap<String, Course> courses;
     //key is name, value is course id
@@ -32,6 +33,7 @@ public class App {
      */
     App(String[] csvFiles) {
         this.students = new HashMap<>();
+        scheduleGenerator = new ScheduleGenerator();
 
         String coursesCSV = null;
         String sectionsCSV = null;
@@ -325,7 +327,21 @@ public class App {
                     System.out.println("Hit enter to continue");
                     inputScanner.nextLine();
                 } else if (response == 5) { //get possible schedule
-                    //do phineus' work
+                    System.out.println("How many courses do you know you want to take, they must be non-overlapping");
+                    int courseNumber = inputScanner.nextInt();
+                    inputScanner.nextLine();
+                    ArrayList<Course> desiredCourses = new ArrayList<>();
+                    for (int i = 0; i < courseNumber; i++) {
+                        System.out.println("What is the code for course " + (i + 1) + " that you would like to take: ");
+                        desiredCourses.add(courses.get(inputScanner.nextLine()));
+                    }
+                    ArrayList<Course> schedule = scheduleGenerator.generateSchedule(currentStudent, desiredCourses, courses);
+                    System.out.println("A possible schedule is:");
+                    for (Course course : schedule) {
+                        System.out.println(course);
+                    }
+                    System.out.println("Hit ENTER to continue");
+                    inputScanner.nextLine();
                 } else if (response == 6) {//log out
                     currentStudent = null;
                 }
