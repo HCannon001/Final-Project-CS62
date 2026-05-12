@@ -93,7 +93,7 @@ public class ScheduleGenerator {
      * Helper to identify if a course is a varsity sport or PE class.
      */
     private boolean isVarsity(Course course) {
-        if (course.getName() != null && course.getName().toLowerCase().contains("varsity") || course.getName() != null && course.getName().toLowerCase().contains("thesis")) {
+        if (course.getName() != null && course.getName().toLowerCase().contains("varsity") || course.getName() != null && course.getName().toLowerCase().contains("thesis") || course.getName() != null && course.getName().toLowerCase().contains("first-year")) {
             return true;
         }
         if (course.getId() != null) {
