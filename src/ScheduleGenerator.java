@@ -3,7 +3,6 @@ package src;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 import java.util.Collections;
 
 public class ScheduleGenerator {
@@ -38,7 +37,6 @@ public class ScheduleGenerator {
         }
 
         // 2. Randomly populate the rest of the schedule up to 4 MAIN courses
-        // Convert to list and shuffle to perfectly randomize, avoiding the "attempts limit" bug
         List<Course> availableCoursesList = new ArrayList<>(allCourses.values());
         Collections.shuffle(availableCoursesList); 
         
@@ -46,8 +44,8 @@ public class ScheduleGenerator {
             // Stop immediately if we hit 4 main courses
             if (countMainCourses(schedule) >= 4) break;
             
-            // Skip labs when searching for main classes
-            if (isLab(randomCourse)) continue;
+            // Skip labs and varsity sports when searching for random academic classes
+            if (isLab(randomCourse) || isVarsity(randomCourse)) continue;
 
             boolean alreadyInSchedule = schedule.contains(randomCourse);
             boolean alreadyTaken = student.completedCourse(randomCourse); 
@@ -66,12 +64,12 @@ public class ScheduleGenerator {
     }
 
     /**
-     * Helper to count only main lectures (ignores labs) so students get a full 4-course load.
+     * Helper to count only main lectures (ignores labs and sports) so students get a full 4-course load.
      */
     private int countMainCourses(ArrayList<Course> schedule) {
         int count = 0;
         for (Course c : schedule) {
-            if (!isLab(c)) {
+            if (!isLab(c) && !isVarsity(c)) {
                 count++;
             }
         }
@@ -87,6 +85,23 @@ public class ScheduleGenerator {
         }
         if (course.getId() != null && course.getId().endsWith("L")) {
             return true;
+        }
+        return false;
+    }
+
+    /**
+     * Helper to identify if a course is a varsity sport or PE class.
+     */
+    private boolean isVarsity(Course course) {
+        if (course.getName() != null && course.getName().toLowerCase().contains("varsity")) {
+            return true;
+        }
+        if (course.getId() != null) {
+            String id = course.getId().toUpperCase();
+            // Catches standard PE, PHED, or VARS department codes
+            if (id.startsWith("PE") || id.startsWith("PHED") || id.contains("VARS")) {
+                return true;
+            }
         }
         return false;
     }
@@ -148,7 +163,7 @@ public class ScheduleGenerator {
 
         ArrayList<String> missingIntro = getMissingIntroCourses(student);
         boolean isTargetAnIntroCourse = targetId.startsWith("CSCI051") || targetId.startsWith("CSCI054") || targetId.startsWith("CSCI062");
-        boolean isCSCourse = targetId.startsWith("CSCI"); // Check if it's actually a CS course
+        boolean isCSCourse = targetId.startsWith("CSCI"); 
 
         if (isTargetAnIntroCourse) {
             // STRICT SEQUENCE ENFORCEMENT for Intro CS
@@ -162,7 +177,6 @@ public class ScheduleGenerator {
             }
         } else if (isCSCourse && !missingIntro.isEmpty()) {
             // ONLY block Upper-Division CS courses if they are missing the intro sequence.
-            // Non-CS courses (like Math, English) will bypass this and go straight to standard prereqs.
             if (isDesired) {
                 System.out.println("Cannot add " + targetId + " - You must first complete these intro courses: " + String.join(", ", missingIntro));
             }
