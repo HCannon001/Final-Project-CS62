@@ -203,15 +203,63 @@ public class App {
      */
     public void runApp() {
         Scanner inputScanner = new Scanner(System.in);
-        currentStudent = new Student(null, 0, null, null);
         while (run) {
-            System.out.println("Press: \n 1: to add classes taken \n 2: to remove a class from classes taken \n 3: to see the courses entered \n 4: to check your major progress \n 5: to get a possible schedule \n 6: to log out");
-            int response = inputScanner.nextInt();
-            inputScanner.nextLine();
-            boolean proceed;
-            switch (response) {
-                case 1:
-                    proceed = true;
+            //sign in/create account
+            if (currentStudent == null) {
+                System.out.println("Press 1 to create an account, 2 to sign in");
+                int input = inputScanner.nextInt();
+                inputScanner.nextLine();
+                if (input == 1) {
+                    boolean exists = false;
+                    System.out.println("Hello! Thank You For Making An Account With Us!");
+                    System.out.println("Enter Email: ");
+                    String userEmail = inputScanner.nextLine().trim();                  
+                    if (this.students.get(userEmail) != null){ // check if this account already exists
+                        System.out.println("This Email Already Has An Account");
+                        exists = true;
+                        continue;
+                    }
+                    if (!exists){ //if not they can make a new one
+                        System.out.println(userEmail);
+                        System.out.println("Enter Student ID number: ");
+                        int userID =  inputScanner.nextInt();
+                        inputScanner.nextLine();
+                        System.out.println("Enter Major: ");
+                        String userMajor = inputScanner.nextLine().trim();
+                        System.out.println("Enter Password: ");
+                        String userPass = inputScanner.nextLine().trim();
+                        Student newStudent = new Student(userEmail, userID, userMajor, userPass);
+                        System.out.println("You account is now made and you are signed in!");
+                        currentStudent = newStudent;
+                        students.put(userEmail, newStudent);
+                    }
+                } else if (input == 2) {
+                    System.out.println("Enter Your Email: ");
+                    String line = inputScanner.nextLine().trim();
+                    Student current = this.students.get(line);
+                    //User does not have an account yet, prompt them to set one up
+                    if (current == null){
+                        System.out.println("You do not have an account yet, please set one up. ");
+                        continue;
+                    }
+                    else{
+                        System.out.println("Enter Your Password: ");
+                        line = inputScanner.nextLine().trim();
+                        if (line.equals(current.getPassword())){
+                            currentStudent = current;
+                            continue;
+                        }
+                        else{
+                            System.out.println("Wrong Password");
+                        }
+                    }
+                }
+            } else {
+                System.out.println("Press: \n 1: to add classes taken \n 2: to remove a class from classes taken \n 3: to see the courses entered \n 4: to check your major progress \n 5: to get a possible schedule \n 6: to log out");
+                int response = inputScanner.nextInt();
+                inputScanner.nextLine();
+                if (response == 1) {
+                    boolean proceed = true;
                     System.out.println("Please Now Enter The Courses You Would Like To Add By ID, for example: CSCI054 PO");
                     while(proceed){
                         ArrayList<Course> addedClasses = new ArrayList<Course>();
@@ -238,8 +286,9 @@ public class App {
                             System.out.println(c.getName());
                         }
                     }
-                case 2:
-                    proceed = true;
+                    
+                } else if( response == 2){ // remove courses
+                    boolean proceed = true;
                     System.out.println("Please Now Enter The Courses You Would Like To Remove By ID, for example: CSCI054 PO");
                     while(proceed){
                         ArrayList<Course> removedClasses = new ArrayList<Course>();
@@ -265,7 +314,7 @@ public class App {
                             System.out.println(c.getName());
                         }
                     }
-                case 3:
+                } else if(response == 3) {
                     ArrayList<Course> completedCourses = currentStudent.getCompletedCourseList();
                     System.out.println("The courses that you have taken are:");
                     for (int i = 0; i < completedCourses.size(); i++) {
@@ -273,11 +322,11 @@ public class App {
                     }
                     System.out.println("Hit enter to continue");
                     inputScanner.nextLine();
-                case 4:
+                } else if (response == 4) { //check major progress
                     currentStudent.checkMajorProgress();
                     System.out.println("Hit enter to continue");
                     inputScanner.nextLine();
-                case 5:
+                } else if (response == 5) { //get possible schedule
                     System.out.println("How many courses do you know you want to take, they must be non-overlapping");
                     int courseNumber = inputScanner.nextInt();
                     inputScanner.nextLine();
@@ -293,8 +342,9 @@ public class App {
                     }
                     System.out.println("Hit ENTER to continue");
                     inputScanner.nextLine();
-                case 6:
-                    currentStudent = new Student(null, 0, null, null);
+                } else if (response == 6) {//log out
+                    currentStudent = null;
+                }
             }
         }
         inputScanner.close();
