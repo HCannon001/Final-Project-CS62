@@ -8,6 +8,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.zip.DataFormatException;
 
@@ -210,140 +211,145 @@ public class App {
         currentStudent = new Student(null, 0, null);
         while (run) {
             System.out.println("Press: \n 1: to add classes taken \n 2: to remove a class from classes taken \n 3: to see the courses entered \n 4: to check your major progress \n 5: to get a possible schedule \n 6: reset data \n 7: exit app");
-            int response = inputScanner.nextInt();
-            inputScanner.nextLine();
-            boolean proceed;
-            switch (response) {
-                case 1:
-                    proceed = true;
-                    System.out.println("Please Now Enter The Courses You Would Like To Add By ID, for example: CSCI054 PO");
-                    while(proceed){
-                        ArrayList<Course> addedClasses = new ArrayList<Course>();
-                        System.out.println("Enter Course To Add, or type 'STOP': ");
-                        String line = inputScanner.nextLine().trim();
-                        System.out.println(line);
-                        if (line.equals("STOP")){
-                            proceed = false;
-                        }
-                        else{
-                            Course adding = this.courses.get(line);
-                            if (adding != null){
-                                if (currentStudent.getCompletedCourseList().contains(adding)){
-                                    System.out.println("You Have Already Added This Course To Your Completed Courselist.");
-                                }else{
-                                    currentStudent.addCourseCompleted(adding); 
-                                    System.out.println("Course Added!");
-                                    addedClasses.add(adding);
-                                }
-                                
+            try{
+                int response = inputScanner.nextInt();
+                inputScanner.nextLine();
+                boolean proceed;
+                switch (response) {
+                    case 1:
+                        proceed = true;
+                        System.out.println("Please Now Enter The Courses You Would Like To Add By ID, for example: CSCI054 PO");
+                        while(proceed){
+                            ArrayList<Course> addedClasses = new ArrayList<Course>();
+                            System.out.println("Enter Course To Add, or type 'STOP': ");
+                            String line = inputScanner.nextLine().trim();
+                            System.out.println(line);
+                            if (line.equals("STOP")){
+                                proceed = false;
                             }
                             else{
-                                System.out.println("That is not a valid course.");
-                                System.out.println("");
+                                Course adding = this.courses.get(line);
+                                if (adding != null){
+                                    if (currentStudent.getCompletedCourseList().contains(adding)){
+                                        System.out.println("You Have Already Added This Course To Your Completed Courselist.");
+                                    }else{
+                                        currentStudent.addCourseCompleted(adding); 
+                                        System.out.println("Course Added!");
+                                        addedClasses.add(adding);
+                                    }
+                                    
+                                }
+                                else{
+                                    System.out.println("That is not a valid course.");
+                                    System.out.println("");
+                                }
+                            }
+                            System.out.println("The Following Courses Were Added:");
+                            for (Course c : addedClasses){
+                                System.out.println(c.getName());
                             }
                         }
-                        System.out.println("The Following Courses Were Added:");
-                        for (Course c : addedClasses){
-                            System.out.println(c.getName());
-                        }
-                    }
-                    break;
-                case 2:
-                    proceed = true;
-                    System.out.println("Please Now Enter The Courses You Would Like To Remove By ID, for example: CSCI054 PO");
-                    while(proceed){
-                        ArrayList<Course> removedClasses = new ArrayList<Course>();
-                        System.out.println("Enter Course To Remove, or type 'STOP': ");
-                        String line = inputScanner.nextLine().trim();
-                        if (line.equals("STOP")){
-                            proceed = false;
-                        }
-                        else{
-                            Course removing = this.courses.get(line);
-                            if (removing != null){
-                                if (!currentStudent.getCompletedCourseList().contains(removing)){
-                                    System.out.println("You Cannot Remove A Course You Have Not Taken Yet");
-                                }else{
-                                    currentStudent.addCourseCompleted(removing); 
-                                    System.out.println("Course Removed!");
-                                    removedClasses.add(removing);
-                                }
-                                
+                        break;
+                    case 2:
+                        proceed = true;
+                        System.out.println("Please Now Enter The Courses You Would Like To Remove By ID, for example: CSCI054 PO");
+                        while(proceed){
+                            ArrayList<Course> removedClasses = new ArrayList<Course>();
+                            System.out.println("Enter Course To Remove, or type 'STOP': ");
+                            String line = inputScanner.nextLine().trim();
+                            if (line.equals("STOP")){
+                                proceed = false;
                             }
                             else{
-                                System.out.println("That is not a valid course.");
-                                System.out.println("");
+                                Course removing = this.courses.get(line);
+                                if (removing != null){
+                                    if (!currentStudent.getCompletedCourseList().contains(removing)){
+                                        System.out.println("You Cannot Remove A Course You Have Not Taken Yet");
+                                    }else{
+                                        currentStudent.addCourseCompleted(removing); 
+                                        System.out.println("Course Removed!");
+                                        removedClasses.add(removing);
+                                    }
+                                    
+                                }
+                                else{
+                                    System.out.println("That is not a valid course.");
+                                    System.out.println("");
+                                }
+                            }
+                            System.out.println("The Following Courses Were Removed:");
+                            for (Course c : removedClasses){
+                                System.out.println(c.getName());
                             }
                         }
-                        System.out.println("The Following Courses Were Removed:");
-                        for (Course c : removedClasses){
-                            System.out.println(c.getName());
+                        break;
+                    case 3:
+                        ArrayList<Course> completedCourses = currentStudent.getCompletedCourseList();
+                        System.out.println("The courses that you have taken are:");
+                        for (int i = 0; i < completedCourses.size(); i++) {
+                            System.out.println((i + 1) + ": " + completedCourses.get(i));
                         }
-                    }
-                    break;
-                case 3:
-                    ArrayList<Course> completedCourses = currentStudent.getCompletedCourseList();
-                    System.out.println("The courses that you have taken are:");
-                    for (int i = 0; i < completedCourses.size(); i++) {
-                        System.out.println((i + 1) + ": " + completedCourses.get(i));
-                    }
-                    System.out.println("Hit enter to continue");
-                    inputScanner.nextLine();
-                    break;
-                case 4:
-                    currentStudent.checkMajorProgress();
-                    System.out.println("Hit enter to continue");
-                    inputScanner.nextLine();
-                    break;
-                case 5:
-                    boolean proceedSchedule = true;
-                    ArrayList<Course> desiredCourses = new ArrayList<>();
-                    System.out.println("Please enter the courses you know you want to take (max 4).");
-                    
-                    while (proceedSchedule && desiredCourses.size() < 4) {
-                        System.out.println("Enter Course Code (e.g., CSCI051 PO), type 'DONE' to generate, or 'STOP' to cancel: ");
-                        String line = inputScanner.nextLine().trim();
-                        
-                        if (line.equalsIgnoreCase("STOP")) {
-                            proceedSchedule = false;
-                            desiredCourses = null; // Flag to abort generation
-                            System.out.println("Returning to main menu...");
-                        } else if (line.equalsIgnoreCase("DONE")) {
-                            proceedSchedule = false;
-                        } else {
-                            Course adding = courses.get(line);
-                            if (adding != null) {
-                                desiredCourses.add(adding);
-                                System.out.println("Course added to your desired list!");
-                            } else {
-                                System.out.println("That is not a valid course.");
-                                System.out.println("");
-                            }
-                        }
-                    }
-                    
-                    if (desiredCourses != null) {
-                        ArrayList<Course> schedule = scheduleGenerator.generateSchedule(currentStudent, desiredCourses, courses);
-                        System.out.println("A possible schedule is:");
-                        for (Course course : schedule) {
-                            if (course != null) {
-                                System.out.println(course.getName());
-                            }
-                        }
-                        System.out.println("Hit ENTER to continue");
+                        System.out.println("Hit enter to continue");
                         inputScanner.nextLine();
-                    }
-                    break;
-                case 6:
-                    currentStudent = new Student(null, 0, null);
-                    break;
+                        break;
+                    case 4:
+                        currentStudent.checkMajorProgress();
+                        System.out.println("Hit enter to continue");
+                        inputScanner.nextLine();
+                        break;
+                    case 5:
+                        boolean proceedSchedule = true;
+                        ArrayList<Course> desiredCourses = new ArrayList<>();
+                        System.out.println("Please enter the courses you know you want to take (max 4).");
+                        
+                        while (proceedSchedule && desiredCourses.size() < 4) {
+                            System.out.println("Enter Course Code (e.g., CSCI051 PO), type 'DONE' to generate, or 'STOP' to cancel: ");
+                            String line = inputScanner.nextLine().trim();
+                            
+                            if (line.equalsIgnoreCase("STOP")) {
+                                proceedSchedule = false;
+                                desiredCourses = null; // Flag to abort generation
+                                System.out.println("Returning to main menu...");
+                            } else if (line.equalsIgnoreCase("DONE")) {
+                                proceedSchedule = false;
+                            } else {
+                                Course adding = courses.get(line);
+                                if (adding != null) {
+                                    desiredCourses.add(adding);
+                                    System.out.println("Course added to your desired list!");
+                                } else {
+                                    System.out.println("That is not a valid course.");
+                                    System.out.println("");
+                                }
+                            }
+                        }
+                        
+                        if (desiredCourses != null) {
+                            ArrayList<Course> schedule = scheduleGenerator.generateSchedule(currentStudent, desiredCourses, courses);
+                            System.out.println("A possible schedule is:");
+                            for (Course course : schedule) {
+                                if (course != null) {
+                                    System.out.println(course.getName());
+                                }
+                            }
+                            System.out.println("Hit ENTER to continue");
+                            inputScanner.nextLine();
+                        }
+                        break;
+                    case 6:
+                        currentStudent = new Student(null, 0, null);
+                        break;
 
-                case 7:
-                    run = false;
-                    break;
-                default:
-                    System.out.println("Invalid option. Please choose a number between 1 and 6.");
-                    break;
+                    case 7:
+                        run = false;
+                        break;
+                    default:
+                        System.out.println("Invalid option. Please choose a number between 1 and 6.");
+                        break;
+                }
+            }catch(InputMismatchException e) {
+                    System.out.println("Please Enter A Number Option");
+                    inputScanner.next();
             }
         }
         inputScanner.close();
