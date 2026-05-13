@@ -43,6 +43,12 @@ and press Return/Enter. After that, follow the instructions on the terminal.
 
 Our code is supposed to be run through `App.java`, but if someone wanted to use our API in their own program, below are the most important methods they may use.
 
+### Printing remaining CS courses needed
+
+After you create a student, call it `currentStudent`, and inserted the classes they have taken, you can call the void function  `currentStudent.checkMajorProgress();` to print what other courses are still required to complete the CS major. 
+
+The printed output will include any introductory or core class and the number of electives still needed.
+
 ## Usage Examples
 
 ## Authors
