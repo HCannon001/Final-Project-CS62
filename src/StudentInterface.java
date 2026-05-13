@@ -11,11 +11,16 @@ public interface StudentInterface<C> {
 
     public void addCourseCompleted(Course completed);
 
+    public String getEmail();
+
+    public int getID();
+    
+    public void checkMajorProgress(); 
+
     public C getCourseCompleted(int index);
 
     public ArrayList<C> getCompletedCourseList();
 
     public String getMajor();
 
-    public void setMajor(String major);
 }

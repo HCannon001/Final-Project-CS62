@@ -3,22 +3,6 @@ package src;
 // Each Student Object is 1 user
 //
 
-/***
- * WORK TO BE DONE BY TOM:
- * Put in tests for edge cases
-
-
-
-
-
-
- * 
- * 
- * 
- * 
- * 
- */
-
 //Imports
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,32 +14,32 @@ public class Student implements StudentInterface<Course>{
     private String email;
     private String major;
     private ArrayList<Course> coursesCompleted;
-    private String password;
    
-
-    public Student(String Email, int id, String major, String password){
+   
+    //Constructor
+    public Student(String Email, int id, String major){
         this.studentID = id;
         this.email=Email;
         this.coursesCompleted = new ArrayList<Course>();
-        this.password = password;
+        
         
     }
 
-    public String getPassword(){
-        return this.password;
-    }
-
+    //Returns email
     public String getEmail(){
         return this.email;
     }
 
+    //returns ID
     public int getID(){
         return this.studentID;
     }
 
+    //Sets users major
     public void setMajor(String major) {
         this.major = major;
     }
+    
     
     public void checkMajorProgress(){
         String[] requiredCourses = {"51", "54", "62", "101", "105", "140", "190"};
@@ -147,24 +131,6 @@ public class Student implements StudentInterface<Course>{
     public String getMajor(){
         return this.major;
     }
-
-
-    // //loops through the major courses needed and removes any that have been taken
-    // //will be used when changing majors
-    // public void updateCoursesNeeded(){
-    //     for (Course n :this.majorCoursesNeeded){
-    //         if (this.completedCourse(n)){
-    //             this.majorCoursesNeeded.remove(n);
-    //         }
-    //     }
-    // }
-    // //Sets the student's major to new major
-    // // creates a new arraylist for their new major and updates it
-    // public void setMajor(String major){
-    //     this.major = major;
-    //     this.majorCoursesNeeded = new ArrayList<Course>(); // 
-    //     this.updateCoursesNeeded();
-    // }
 
 
 
