@@ -164,8 +164,8 @@ public class App {
                 } else {
                     skipped++;
                 }
-                br.close();
             }
+            br.close();
         } catch (IOException e) {
             System.err.println("Error reading section file: " + e.getMessage());
         }
