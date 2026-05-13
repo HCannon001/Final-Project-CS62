@@ -205,7 +205,7 @@ public class App {
         Scanner inputScanner = new Scanner(System.in);
         currentStudent = new Student(null, 0, null, null);
         while (run) {
-            System.out.println("Press: \n 1: to add classes taken \n 2: to remove a class from classes taken \n 3: to see the courses entered \n 4: to check your major progress \n 5: to get a possible schedule \n 6: to log out");
+            System.out.println("Press: \n 1: to add classes taken \n 2: to remove a class from classes taken \n 3: to see the courses entered \n 4: to check your major progress \n 5: to get a possible schedule \n 6: reset data \n 7: exit app");
             int response = inputScanner.nextInt();
             inputScanner.nextLine();
             boolean proceed;
@@ -334,6 +334,9 @@ public class App {
                     currentStudent = new Student(null, 0, null, null);
                     break;
 
+                case 7:
+                    run = false;
+                    break;
                 default:
                     System.out.println("Invalid option. Please choose a number between 1 and 6.");
                     break;
