@@ -24,22 +24,6 @@ public class Student implements StudentInterface<Course>{
         
         
     }
-
-    //Returns email
-    public String getEmail(){
-        return this.email;
-    }
-
-    //returns ID
-    public int getID(){
-        return this.studentID;
-    }
-
-    //Sets users major
-    public void setMajor(String major) {
-        this.major = major;
-    }
-    
     
     public void checkMajorProgress(){
         String[] requiredCourses = {"51", "54", "62", "101", "105", "140", "190"};
@@ -109,30 +93,11 @@ public class Student implements StudentInterface<Course>{
         if (!this.coursesCompleted.contains(completed)) {this.coursesCompleted.add(completed);}       
     }
 
-    //true if the user has completed that course
-    //I added this, don't know if it will end up being needed
-    //here in case, we can always take out
-    public boolean completedCourse(Course C){
-        if (this.coursesCompleted.contains(C)) {return true;}
-        return false;
-    }
-
-    //gets the students completed course at that index
-    public Course getCourseCompleted(int index){
-        return this.coursesCompleted.get(index);
-    }
-
     //returns the student's array list of completed courses 
     public ArrayList<Course> getCompletedCourseList(){
         return this.coursesCompleted;
     }
     
-    //returns the students major
-    public String getMajor(){
-        return this.major;
-    }
-
-
 
     
 }
