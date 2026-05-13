@@ -24,7 +24,8 @@ public class Student implements StudentInterface<Course>{
         
         
     }
-    
+
+    // This method checks the student's progress towards their major requirements and prints out which courses they still need to complete, if any.
     public void checkMajorProgress(){
         String[] requiredCourses = {"51", "54", "62", "101", "105", "140", "190"};
         HashMap<String, Boolean> coursesCompletedMap = new HashMap<>();
@@ -32,9 +33,11 @@ public class Student implements StudentInterface<Course>{
             coursesCompletedMap.put(majorCourse, false);
         }
         int electivesCompleted = 0;
-
+        // loop through the student's completed courses and check if they have completed the required courses
         for (Course myCourse : this.coursesCompleted){
             if (myCourse.getId().contains("CSCI") && myCourse.getId().length()>=10) {
+                // check if it's valid cs class
+                // check each intro/core class, if it's completed, mark it as true in the map
                if (myCourse.getId().equals("CSCI051 PO")){
                    coursesCompletedMap.put("51", true);
                }
@@ -57,21 +60,21 @@ public class Student implements StudentInterface<Course>{
                    coursesCompletedMap.put("190", true);
                }
             else if (myCourse.getId().contains("CSCI050")  || myCourse.getId().charAt(7)=='L'){
-                // if it's a lab for one of the required courses, we do not count it as an elective
+                // if it's a lab or cs 50, we do not count it as an elective
             }
             else{
-            // add checks for labs and CS 50
-            //might wanna add lab checks and/or low division checks and/or repetition checks
+            //any other valid cs course counts as an elective
                 electivesCompleted++;}
             }
         }
-
+        // check which required courses are still needed and how many electives are still needed
         ArrayList<String> coursesStillNeeded = new ArrayList<String>();
         for (String course : requiredCourses) {
             if (!coursesCompletedMap.get(course)) {
                 coursesStillNeeded.add(course);
             }
         }
+        // finally print the results to the user
         if (coursesStillNeeded.size() == 0 && electivesCompleted >= 3) {
             System.out.println("Congratulations! You have completed all the required courses for your major.");
         } else {
@@ -81,11 +84,13 @@ public class Student implements StudentInterface<Course>{
                     System.out.println(course);
                 }
             }
+            // there needs to be at least 3 electives
             if (electivesCompleted < 3) {
                 System.out.println("You need to complete " + (3 - electivesCompleted) + " more elective courses.");
             }
         }
-        }
+
+    }
 
 
     //adds a course to the student's list
