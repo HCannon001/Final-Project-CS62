@@ -108,10 +108,13 @@ public class App {
 
                 courses.put(courseCode, course);
                 courseNameToId.put(courseName, courseCode);
+                
             }
+            br.close();
         } catch (IOException e) {
             System.err.println("Error reading courses file: " + e.getMessage());
         }
+       
     }
 
     private void loadSections(String filePath) {
@@ -203,7 +206,7 @@ public class App {
      */
     public void runApp() {
         Scanner inputScanner = new Scanner(System.in);
-        currentStudent = new Student(null, 0, null, null);
+        currentStudent = new Student(null, 0, null);
         while (run) {
             System.out.println("Press: \n 1: to add classes taken \n 2: to remove a class from classes taken \n 3: to see the courses entered \n 4: to check your major progress \n 5: to get a possible schedule \n 6: reset data \n 7: exit app");
             int response = inputScanner.nextInt();
@@ -331,7 +334,7 @@ public class App {
                     }
                     break;
                 case 6:
-                    currentStudent = new Student(null, 0, null, null);
+                    currentStudent = new Student(null, 0, null);
                     break;
 
                 case 7:
