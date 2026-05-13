@@ -98,6 +98,11 @@ public class Student{
         if (!this.coursesCompleted.contains(completed)) {this.coursesCompleted.add(completed);}       
     }
 
+    //removes a course from the student's list
+    protected void removeCourseCompleted(Course completed){
+        this.coursesCompleted.remove(completed);
+    }
+
     //true if the user has completed that course
     //I added this, don't know if it will end up being needed
     //here in case, we can always take out

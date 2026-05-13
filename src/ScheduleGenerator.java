@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Collections;
+import java.time.LocalTime;
 
 public class ScheduleGenerator {
 
@@ -134,7 +135,7 @@ public class ScheduleGenerator {
      * Determines if two specific sections overlap in days and time.
      */
     private boolean doesConflict(Section s1, Section s2) {
-        if (s1.getDays() == null || s2.getDays() == null || s1.getTime() == null || s2.getTime() == null) {
+        if (s1.getDays() == null || s2.getDays() == null || s1.getStartTime() == null || s2.getStartTime() == null || s1.getEndTime() == null || s2.getEndTime() == null) {
             return false; 
         }
 
@@ -150,7 +151,13 @@ public class ScheduleGenerator {
             return false;
         }
 
-        return s1.getTime().equals(s2.getTime());
+        // Check if time intervals overlap: [start1, end1) and [start2, end2)
+        LocalTime start1 = s1.getStartTime();
+        LocalTime end1 = s1.getEndTime();
+        LocalTime start2 = s2.getStartTime();
+        LocalTime end2 = s2.getEndTime();
+
+        return start1.isBefore(end2) && start2.isBefore(end1);
     }
 
     /**

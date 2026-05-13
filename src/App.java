@@ -1,7 +1,6 @@
 package src;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalTime;
@@ -142,17 +141,21 @@ public class App {
                 String courseCode = fields[0].replaceAll("\\s{2,}", " ").trim();
                 String meetingDays = fields[12].trim();
                 String startTimestr = fields[14].trim();
+                String endTimestr = fields[15].trim();
                 String room = fields[16].trim();
                 String instructor = fields[17].trim();
 
                 LocalTime startTime;
+                LocalTime endTime;
                 try {
                     startTime = LocalTime.parse(startTimestr, timeFormatter);
+                    endTime = LocalTime.parse(endTimestr, timeFormatter);
                 } catch (Exception e) {
                     startTime = LocalTime.MIDNIGHT;
+                    endTime = LocalTime.MIDNIGHT;
                 }
 
-                Section section = new Section(meetingDays, startTime, instructor, room);
+                Section section = new Section(meetingDays, startTime, endTime, instructor, room);
 
                 Course course = courses.get(courseCode);
                 if (course != null) {
@@ -266,7 +269,7 @@ public class App {
                                     if (!currentStudent.getCompletedCourseList().contains(removing)){
                                         System.out.println("You Cannot Remove A Course You Have Not Taken Yet");
                                     }else{
-                                        currentStudent.addCourseCompleted(removing); 
+                                        currentStudent.removeCourseCompleted(removing); 
                                         System.out.println("Course Removed!");
                                         removedClasses.add(removing);
                                     }

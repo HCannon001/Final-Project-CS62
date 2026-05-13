@@ -9,9 +9,13 @@ import java.time.LocalTime;
  */
 public interface SectionInterface {
     
-    public void setTime(LocalTime time);
+    public void setStartTime(LocalTime startTime);
 
-    public LocalTime getTime();
+    public LocalTime getStartTime();
+
+    public void setEndTime(LocalTime endTime);
+
+    public LocalTime getEndTime();
 
     public String getLocation();
 

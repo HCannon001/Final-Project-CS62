@@ -14,20 +14,23 @@ import java.time.LocalTime;
 public class Section implements SectionInterface {
 
     private String days;
-    private LocalTime time;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private String professor;
     private String location;
 
     /**
      * Constructor for Section
      * @param days
-     * @param time
+     * @param startTime
+     * @param endTime
      * @param professor
      * @param location
      */
-    Section(String days, LocalTime time, String professor, String location) {
+    Section(String days, LocalTime startTime, LocalTime endTime, String professor, String location) {
         this.days = days;
-        this.time = time;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.professor = professor;
         this.location = location;
     }
@@ -57,8 +60,8 @@ public class Section implements SectionInterface {
      * @param time
      */
     @Override
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
     }
 
     /**
@@ -67,8 +70,28 @@ public class Section implements SectionInterface {
      * @return time
      */
     @Override
-    public LocalTime getTime() {
-        return time;
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    /**
+     * End time setter for the section offering
+     * 
+     * @param endTime
+     */
+    @Override
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
+    /**
+     * End time getter for the section offering
+     * 
+     * @return endTime
+     */
+    @Override
+    public LocalTime getEndTime() {
+        return endTime;
     }
 
     /**
