@@ -14,9 +14,9 @@ Here is a high-level description of the three main features we developed.
 
 - Based on the completed courses, user can request a major progress check. If they haven't completed all the required classes yet, they receive a list of remaining introductory and core classes, as well as the number of electives still needed.
 
-- The user can ask for an appropriate schedule for the next semester. They will be recommended a schedule of 4 classes which includes some CS classes they are eligible to take based on prerequisites as well as some general education classes. The 4 classes won't have any time conflicts.
+- The user can input courses they intend to take and be given an appropriate schedule for the next semester. They will be recommended a schedule of 4 classes they are eligible to take based on prerequisites. The courses they intend to take will only be allowed if they meet all relevant prerequisites. Furthermore, the 4 classes won't have any time conflicts.
 
-For the algorithms and data structures behind these features, see our writeup.
+For the algorithms and data structures behind these features, see [Implementation Details](#implementation-details) below.
 
 
 ## Instructions for Running the Code
