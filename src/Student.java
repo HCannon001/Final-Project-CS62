@@ -17,7 +17,7 @@ public class Student implements StudentInterface<Course>{
    
    
     //Constructor
-    public Student(String Email, int id, String major){
+    protected Student(String Email, int id, String major){
         this.studentID = id;
         this.email=Email;
         this.coursesCompleted = new ArrayList<Course>();
@@ -26,7 +26,7 @@ public class Student implements StudentInterface<Course>{
     }
 
     // This method checks the student's progress towards their major requirements and prints out which courses they still need to complete, if any.
-    public void checkMajorProgress(){
+    protected void checkMajorProgress(){
         String[] requiredCourses = {"51", "54", "62", "101", "105", "140", "190"};
         HashMap<String, Boolean> coursesCompletedMap = new HashMap<>();
         for (String majorCourse : requiredCourses) {
@@ -94,25 +94,25 @@ public class Student implements StudentInterface<Course>{
 
 
     //adds a course to the student's list
-    public void addCourseCompleted(Course completed){
+    protected void addCourseCompleted(Course completed){
         if (!this.coursesCompleted.contains(completed)) {this.coursesCompleted.add(completed);}       
     }
 
     //true if the user has completed that course
     //I added this, don't know if it will end up being needed
     //here in case, we can always take out
-    public boolean completedCourse(Course C){
+    protected boolean completedCourse(Course C){
         if (this.coursesCompleted.contains(C)) {return true;}
         return false;
     }
 
       //gets the students completed course at that index
-      public Course getCourseCompleted(int index){
+    protected Course getCourseCompleted(int index){
         return this.coursesCompleted.get(index);
     }
 
     //returns the student's array list of completed courses 
-    public ArrayList<Course> getCompletedCourseList(){
+    protected ArrayList<Course> getCompletedCourseList(){
         return this.coursesCompleted;
     }
     
