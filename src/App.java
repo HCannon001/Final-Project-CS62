@@ -9,8 +9,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.zip.DataFormatException;
 
+/**
+ * This is the main class for our app. Everything runs off of this file.
+ * The constructor pulls in data from courses.csv and sections.csv files and compiles it into a hashmap of courses
+ * each course then contains the offered sections
+ * 
+ * the main loop is then called and runs until the app is closed
+ * 
+ * To run this file without the bash file found in the main directory, you must attach flags 
+ * cooresponding to the csv files so it knows where to pull the data from.
+ * 
+ * @author Deniz, Henry, Tom, Phineus
+*/
 public class App {
     
     ScheduleGenerator scheduleGenerator;
@@ -76,6 +87,11 @@ public class App {
         loadSections(sectionsCSV);
     }
 
+    /**
+     * This function takes in the filepath to the courses csv data set and creates the course objects that are used in the app
+     * 
+     * @param filePath - the path to the courses.csv file
+     */
     private void loadCourses(String filePath) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(filePath));
@@ -117,6 +133,11 @@ public class App {
        
     }
 
+    /**
+     * This file loops through the sections.csv file and adds each section to its cooresponding course object
+     * 
+     * @param filePath
+     */
     private void loadSections(String filePath) {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("H:mm");
         int attached = 0;
@@ -171,6 +192,11 @@ public class App {
         }
     }
 
+    /**
+     * This object takes a line from a csv and returns a string[] object that can be easily accessed and used
+     * @param line - the line from the csv that wants to be accessed
+     * @return the line broken into the string values
+     */
     private String[] parseCSVLine(String line) {
         ArrayList<String> fields = new ArrayList<>();
         StringBuilder current = new StringBuilder();
@@ -208,6 +234,8 @@ public class App {
 
     /**
      * The main loop for the program
+     * This is wehre the different elements of the app are accessed. 
+     * It runs after the constructor until the app is closed
      */
     public void runApp() {
         Scanner inputScanner = new Scanner(System.in);
