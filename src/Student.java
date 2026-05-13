@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class Student implements StudentInterface<Course>{
+public class Student{
 
     private int studentID;
     private String email;
