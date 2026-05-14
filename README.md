@@ -6,7 +6,7 @@ Our project helps students plan their classes by showing which classes they stil
 
 Developed by Tom Burton, Henry Cannon, Phineus Choi, Deniz Tanaci for the CS 62 Final Project in Spring 2026.
 
-Our writeup can be found [here](https://docs.google.com/document/d/1U_NVlNIJujsB7xpD5aeN6MF5crR_XXT_DuV9SYN1R3E/edit?usp=sharing).
+Our writeup can be found [here](./CS62FinalWriteUp.pdf).
 
 ## Main Features
 Here is a high-level description of the three main features we developed. 
@@ -246,7 +246,22 @@ The class then outputs two files, `courses.csv` and `sections.csv`. `courses.csv
 This is an interface for a course object. The functions that are apart of the interface are: `addPreReq`, `getPreReq`, `addSection`, `getSection`, `getSections`, `setDescription`, `getDescription`, `addMajor`, and `getMajor`.
 
 ### ScheduleGenerator.java
+`ScheduleGenerator.java` is responsible for generating a 4-course schedule for a student based on their desired courses, completed courses, prerequisites, and section time availability. It fills any remaining slots randomly from the course catalog, avoiding labs and varsity sports.
 
+The class has no constructor and is used by instantiating it and calling `generateSchedule()`. An example of calling this would be the following:
+```java
+ScheduleGenerator generator = new ScheduleGenerator();
+ArrayList<Course> schedule = generator.generateSchedule(student, desiredCourses, allCourses);
+```
+
+Additionally, there is only one public class:
+
+#### `generateSchedule()`:
+This generates a schedule of up to 4 main courses for the given student. It first tries to add each desired course, then randomly fills remaining slots from the full course catalog. Labs and varsity sports are skipped during random filling. Returns the final schedule as an ArrayList of Course objects.
+```java
+ArrayList<Course> schedule = generator.generateSchedule(student, desiredCourses, allCourses);
+-> ArrayList<Course> schedule
+```
 
 ### SectionInterface.java
 This is an interface for a section object. The functions that are apart of the interface are: `setStartTime`, `getStartTime`, `setEndTime`, `getEndTime`, `getLocation`, `setLocation`, `setProfessor`, and `getProfessor`.
