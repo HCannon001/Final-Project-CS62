@@ -68,7 +68,8 @@ String name = "name";
 String description = "a new course";
 Course course = new Course(id, name, description);
 ```
-The following are a descripton of each method in Course and an example call:
+<details>
+<summary>The following are a descripton of each method in Course and an example call:</summary>
 
 #### `addPreReq()`:
 This adds a new prereq to the arrayList of prereqs.
@@ -117,15 +118,141 @@ getDiscription();
 -> String description
 ```
 
+#### `getId()`:
+This function returns the Id of a course
+```java
+getId();
+-> String id
+```
+
+### `addMajor()`:
+This function adds a major to the array of majors
+```java
+addMajor("some major");
+```
+
+#### `getName()`:
+This function returns the Id of a course
+```java
+getName();
+-> String name
+```
+
+#### `equals()`:
+This funciton checks all the elements of course and if they are all equal it returns true
+```java
+Course course = new course("id", "name", "description")
+course.equals(new course("id", "name", "description"))
+-> true
+```
+
+#### `toString()`:
+This function outputs the name of the course as the string
+```java
+Course course = new Course("id", "name", "description")
+course.toString()
+-> "name"
+```
+</details>
+
+### Section.java
+`Section.java` is responsible for storing the data for each section of a course while the app is running. It stores the following data about sections: days, startTime, endTime, professor, and location.
+
+The constructor takes in five elements: days, startTime, endTime, professor, and location. An example of calling this would be the following:
+```java
+String days = "MWF";
+LocalTime startTime = LocalTime.of(9, 0);
+LocalTime endTime = LocalTime.of(10, 0);
+String professor = "Dr. Smith";
+String location = "Building A";
+Section section = new Section(days, startTime, endTime, professor, location);
+```
+<details>
+<summary>The following are a description of each method in Section and an example call:</summary>
+
+#### `setDays()`:
+This sets the days the section is offered.
+```java
+setDays("MWF");
+```
+
+#### `getDays()`:
+This returns the days the section is offered.
+```java
+getDays();
+-> String days
+```
+
+#### `setStartTime()`:
+This sets the start time of the section.
+```java
+setStartTime(LocalTime.of(9, 0));
+```
+
+#### `getStartTime()`:
+This returns the start time of the section.
+```java
+getStartTime();
+-> LocalTime startTime
+```
+
+#### `setEndTime()`:
+This sets the end time of the section.
+```java
+setEndTime(LocalTime.of(10, 0));
+```
+
+#### `getEndTime()`:
+This returns the end time of the section.
+```java
+getEndTime();
+-> LocalTime endTime
+```
+
+#### `setLocation()`:
+This sets the location where the section is held.
+```java
+setLocation("Building A");
+```
+
+#### `getLocation()`:
+This returns the location where the section is held.
+```java
+getLocation();
+-> String location
+```
+
+#### `setProfessor()`:
+This sets the professor teaching the section.
+```java
+setProfessor("Dr. Smith");
+```
+
+#### `getProfessor()`:
+This returns the professor teaching the section.
+```java
+getProfessor();
+-> String professor
+```
+
+</details>
+
+### CourseDataBuilder.java
+The only public function that is apart `CourseDataBuilder.java` is the main funciton. To run this class, you must have a data folder that contains the following files from hyper schedule's Github: `alt-staff.json`, `calendar-session-section.json`, `calendar-session.json`, `course-area.json`, `course-areas-description.json`, `course-section-schedule.json`, `course-section.json`, `course.txt`, `per,-count.json`, `section-instructor.json`, `staff.json`.
+
+The class then outputs two files, `courses.csv` and `sections.csv`. `courses.csv` is a csv file that organizes the data in the following way: courseCode, courseName, college, areaCode, cipCode, courseAreas, description. `sections.csv` is a csv file that organizes the data in the following way: courseCode, sectionId, sectionNumber, semesterId, sessionId, beginDate, endDate, creditHours, capacity, currentEnrollment, status, permCount,  meetingDays,meetingDaysRaw, startTime, endTime, room, instructors
+
+### CourseInterface.java
+This is an interface for a course object. The functions that are apart of the interface are: `addPreReq`, `getPreReq`, `addSection`, `getSection`, `getSections`, `setDescription`, `getDescription`, `addMajor`, and `getMajor`.
+
+### ScheduleGenerator.java
 
 
-### Printing remaining CS courses needed
+### SectionInterface.java
+This is an interface for a section object. The functions that are apart of the interface are: `setStartTime`, `getStartTime`, `setEndTime`, `getEndTime`, `getLocation`, `setLocation`, `setProfessor`, and `getProfessor`.
 
-After you create a student, call it `currentStudent`, and inserted the classes they have taken, you can call the void function  `currentStudent.checkMajorProgress();` to print what other courses are still required to complete the CS major. 
-
-The printed output will include any introductory or core class and the number of electives still needed.
-
-## Usage Examples
+### Student.java
+This file does not have any public functions. Our intention is that this object is used to store classes for a temporary user that gets controlled by `App.java`.
 
 ## Authors
 
