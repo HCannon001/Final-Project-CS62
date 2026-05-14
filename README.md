@@ -2,9 +2,9 @@
 
 We have developed this major progress tracker for the CS major at Pomona College. 
 
-Our project helps students plan their classes by showing which classes they still need to complete the CS major and suggesting an appropriate schedule for the next semester. These recommendations are based on a dataset of offered classes and their prerequisites. While the main focus is completing the CS major on time, we also include non-CS classes in the suggested schedule.
+Our project helps students plan their classes by showing which classes they still need to complete the CS major and suggesting an appropriate schedule for the next semester. These recommendations are based on a dataset of offered classes and their prerequisites. While the main focus is completing the CS major on time, we also include non-CS classes in the suggested schedule. To see an example of how the app runs, you can look at the writeup pdf that contains pictures of the app in use.
 
-Developed by Tom Burton, Henry Cannon, Phineus Choi, Deniz Tanaci for the CS 62 Final Project in Spring 2026.
+Developed by Tom Burton, Henry Cannon, Phineus Choi, and Deniz Tanaci for the CS 62 Final Project in Spring 2026.
 
 Our writeup can be found [here](./CS62FinalWriteUp.pdf).
 
