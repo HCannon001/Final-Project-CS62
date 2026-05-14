@@ -254,7 +254,6 @@ public class App {
                             ArrayList<Course> addedClasses = new ArrayList<Course>();
                             System.out.println("Enter Course To Add, or type 'STOP': ");
                             String line = inputScanner.nextLine().trim();
-                            System.out.println(line);
                             if (line.equals("STOP")){
                                 proceed = false;
                             }
