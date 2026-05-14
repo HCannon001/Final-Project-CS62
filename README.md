@@ -254,6 +254,9 @@ This is an interface for a section object. The functions that are apart of the i
 ### Student.java
 This file does not have any public functions. Our intention is that this object is used to store classes for a temporary user that gets controlled by `App.java`.
 
+### runs.sh
+This is a bash file that is used to easily run the app. Simply type `./run.sh` in the root of the project and the project will run `App.java` with the proper inputs.
+
 ## Authors
 
 Tom Burton, Henry Cannon, Phineus Choi, Deniz Tanaci
