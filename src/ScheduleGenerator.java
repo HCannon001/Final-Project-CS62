@@ -6,6 +6,12 @@ import java.util.List;
 import java.util.Collections;
 import java.time.LocalTime;
 
+
+/**
+ * This file contains methods that allow for the schdule to be generated for the user
+ * 
+ * @author Phineus, Deniz, Tom, Henry
+ */
 public class ScheduleGenerator {
 
     /**
